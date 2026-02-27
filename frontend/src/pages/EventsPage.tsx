@@ -125,7 +125,32 @@ const uhclEvent = {
 
 const EventsPage = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-violet-50 to-indigo-50">
+    <div className="min-h-screen relative">
+      {/* Ambient background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+        <div className="absolute inset-0 bg-gradient-to-b from-violet-50/80 via-white to-indigo-50/60" />
+        <motion.div
+          className="absolute top-1/4 -left-24 w-72 h-72 sm:w-[28rem] sm:h-[28rem] rounded-full bg-gradient-to-br from-violet-300/30 to-purple-400/20 blur-3xl"
+          animate={{ x: [0, 30, 0], y: [0, -25, 0], scale: [1, 1.1, 1] }}
+          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute top-1/3 -right-20 w-64 h-64 sm:w-96 sm:h-96 rounded-full bg-gradient-to-br from-indigo-300/25 to-blue-400/20 blur-3xl"
+          animate={{ x: [0, -25, 0], y: [0, 30, 0], scale: [1, 1.15, 1] }}
+          transition={{ duration: 26, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+        />
+        <motion.div
+          className="absolute bottom-1/3 left-1/3 w-56 h-56 sm:w-80 sm:h-80 rounded-full bg-gradient-to-br from-fuchsia-200/20 to-violet-300/25 blur-3xl"
+          animate={{ x: [0, 20, 0], y: [0, -20, 0], scale: [1, 1.12, 1] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-72 sm:h-72 rounded-full bg-gradient-to-br from-blue-200/20 to-indigo-300/20 blur-3xl hidden sm:block"
+          animate={{ x: [0, -15, 0], y: [0, 20, 0], scale: [1, 1.08, 1] }}
+          transition={{ duration: 24, repeat: Infinity, ease: "easeInOut", delay: 6 }}
+        />
+      </div>
+
       <SEO
         title="Events - JournalXP"
         description="IRL JournalXP experiences and community meetups. Join us for guided reflection sessions and mental wellness events."
