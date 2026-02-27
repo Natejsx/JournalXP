@@ -157,7 +157,7 @@ const EventsPage = () => {
             {/* Content */}
             <div className="relative z-10 p-8 md:p-14 text-white">
               {/* Top bar: label + logo */}
-              <div className="flex items-center justify-between mb-10">
+              <div className="flex items-center justify-between mb-3">
                 <span className="text-[11px] font-bold tracking-[0.22em] uppercase text-violet-300/90 border border-violet-400/25 bg-violet-500/10 px-4 py-1.5 rounded-full backdrop-blur-sm">
                   JournalXP × UHCL
                 </span>
@@ -166,6 +166,11 @@ const EventsPage = () => {
                   <span className="text-white">XP</span>
                 </div>
               </div>
+
+              {/* Partnership line */}
+              <p className="text-white/55 text-xs tracking-wide mb-8">
+                In partnership with the UHCL Digital Arts Organization
+              </p>
 
               {/* Emotional hook */}
               <p className="text-violet-300/75 text-sm font-medium tracking-wide mb-3">
@@ -218,14 +223,17 @@ const EventsPage = () => {
               </p>
 
               {/* CTA */}
-              <motion.button
+              <motion.a
+                href="https://docs.google.com/forms/d/e/1FAIpQLScnkuNR8_R-vAN-OnDLPCRvw7ufv1Bj66WtrAkwIiyuKN-ppg/viewform?usp=publish-editor"
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className="group inline-flex items-center gap-3 bg-white text-violet-800 font-semibold text-sm px-7 py-3.5 rounded-full shadow-[0_8px_30px_rgba(109,40,217,0.4)] hover:shadow-[0_12px_40px_rgba(109,40,217,0.55)] hover:bg-violet-50 transition-all duration-200"
               >
                 Reserve Your Spot
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform duration-150" />
-              </motion.button>
+              </motion.a>
             </div>
           </div>
 
@@ -301,7 +309,7 @@ const EventsPage = () => {
           </div>
 
           {/* Timeline */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-violet-100">
+          {/* <div className="bg-white rounded-2xl p-6 shadow-sm border border-violet-100">
             <h2 className="text-lg font-bold text-gray-800 mb-6">
               Promotion Timeline
             </h2>
@@ -322,7 +330,7 @@ const EventsPage = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Potential Partners */}
           <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-6 border border-indigo-100">
