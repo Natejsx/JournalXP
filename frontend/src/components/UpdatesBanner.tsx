@@ -4,14 +4,13 @@ import { useTheme } from "@/context/ThemeContext";
 
 const updates = [
   {
-    date: "February 7th, 2026",
+    date: "February 27th, 2026",
     content: [
-      "Sunday AI now sounds more natural and human. Responses are warmer, shorter, and less clinical.",
-      "Fixed a bug where Sunday AI would lock you out after 25 total conversations instead of resetting daily.",
-      "Journal prompts are now saved with your entries so you can see what inspired your writing.",
-      "The word count indicator in the journal editor now shows 'word goal' so it's clear it's a target, not a limit.",
-      "Mood Trends in Insights & Analytics got a full visual redesign with a glassmorphism look.",
-      "Daily Tasks page now matches your selected theme.",
+      "New Writing Consistency Calendar in Journal Insights, see your daily writing habits at a glance with a 30/60/90-day toggle and streak tracking.",
+      "Habit Category Balance donut chart now shows how your habits break down by category (mindfulness, physical, social, productivity) in the Patterns tab.",
+      "Mood Trends now includes a donut chart alongside the bar view for a clearer picture of your emotional patterns.",
+      "Fixed a bug where the daily self-reflection counter wasn't resetting at midnight on the frontend.",
+      "New Events page added, check out the JournalXP x UHCL Mid-Semester Mental Reset event.",
     ],
   },
 ];
@@ -54,7 +53,7 @@ export const UpdatesBanner = () => {
             </div>
             <div className="text-left">
               <h3 className="font-semibold text-sm">
-                What's New in JournalXP v3.0.5
+                What's New in JournalXP v3.1.0
               </h3>
               <p className="text-xs text-indigo-100">
                 Click to see all updates and new features
@@ -81,7 +80,7 @@ export const UpdatesBanner = () => {
       <div className="flex items-center gap-2 mb-2">
         <Info className="text-indigo-500 w-4 h-4" />
         <h2 className="text-indigo-700 font-semibold text-sm">
-          Latest Update | Version 3.0.5
+          Latest Update | Version 3.1.0
         </h2>
       </div>
 

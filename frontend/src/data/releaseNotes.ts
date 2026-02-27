@@ -11,6 +11,32 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "3.1.0",
+    date: "2026-02-27",
+    title: "Insights Overhaul, Events Page & Bug Fixes",
+    highlights: [
+      "New Writing Consistency Calendar with 30/60/90-day view and streak tracking",
+      "Habit Category Balance donut chart shows how your habits are distributed",
+      "Mood Trends now includes a donut chart for visual mood distribution",
+      "New Events page for JournalXP community events",
+      "Fixed daily self-reflection reset not updating on the frontend",
+    ],
+    features: [
+      "Writing Consistency Calendar: GitHub-style calendar in Journal Insights showing daily writing streaks, current and best streak, and a 30/60/90-day toggle",
+      "Habit Category Balance: New donut chart in the Patterns tab breaking down habits by category (mindfulness, physical, social, productivity, custom) with smart insights",
+      "Mood Distribution Donut Chart: Added to Mood Trends alongside the existing bar view, respects your 7/30/90-day filter selection",
+      "Events Page: Community events page with glass morphism cards, ambient animated background, and hero card — starting with JournalXP x UHCL Mid-Semester Mental Reset",
+    ],
+    improvements: [
+      "Insights & Analytics tabs now show richer visual data with donut charts alongside existing bar/area charts",
+      "Writing Consistency Calendar uses a non-punishing color scheme that celebrates writing days without highlighting missed days negatively",
+      "Events page uses ambient animated orbs and glass morphism cards consistent with the rest of the app's aesthetic",
+    ],
+    bugFixes: [
+      "Fixed daily self-reflection counter not resetting at midnight — the frontend now checks dailyResetAt before displaying used counts, matching the backend's lazy-reset behavior",
+    ],
+  },
+  {
     version: "3.0.0",
     date: "2026-01-26",
     title: "Major Redesign, AI Improvements & New Features",
