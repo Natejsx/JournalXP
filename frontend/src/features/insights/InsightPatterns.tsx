@@ -93,6 +93,9 @@ export const InsightPatterns = () => {
         <XPOverview />
       </div>
 
+      {/* Habit Category Balance */}
+      <HabitCategoryBalance />
+
       {/* Quick Stats Grid */}
       <QuickStatsGrid />
 
@@ -492,6 +495,214 @@ const QuickStatsGrid = () => {
         </CardContent>
       </Card>
     </div>
+  );
+};
+
+// Habit Category Balance
+const CATEGORY_COLORS: Record<string, string> = {
+  mindfulness: "#8B5CF6",
+  physical: "#10B981",
+  social: "#3B82F6",
+  productivity: "#F59E0B",
+  custom: "#9CA3AF",
+};
+
+const CATEGORY_LABELS: Record<string, string> = {
+  mindfulness: "Mindfulness",
+  physical: "Physical",
+  social: "Social",
+  productivity: "Productivity",
+  custom: "Custom",
+};
+
+const CATEGORY_EMOJIS: Record<string, string> = {
+  mindfulness: "🧘",
+  physical: "💪",
+  social: "🤝",
+  productivity: "⚡",
+  custom: "✨",
+};
+
+const HabitCategoryBalance = () => {
+  const { user } = useAuth();
+  const [categoryData, setCategoryData] = useState<
+    { category: string; count: number; completions: number; percentage: number }[]
+  >([]);
+  const [insight, setInsight] = useState<string>("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const habits = await getHabits();
+
+        if (habits.length === 0) {
+          setCategoryData([]);
+          setLoading(false);
+          return;
+        }
+
+        // Count habits and sum completions per category
+        const counts: Record<string, { count: number; completions: number }> = {};
+        habits.forEach((h: Habit) => {
+          const cat = h.category || "custom";
+          if (!counts[cat]) counts[cat] = { count: 0, completions: 0 };
+          counts[cat].count += 1;
+          counts[cat].completions += h.currentCompletions || 0;
+        });
+
+        const total = habits.length;
+        const data = Object.entries(counts)
+          .map(([category, { count, completions }]) => ({
+            category,
+            count,
+            completions,
+            percentage: Math.round((count / total) * 100),
+          }))
+          .sort((a, b) => b.count - a.count);
+
+        setCategoryData(data);
+
+        // Generate insight
+        const allCategories = ["mindfulness", "physical", "social", "productivity"];
+        const presentCategories = data.map((d) => d.category);
+        const missingCategories = allCategories.filter(
+          (c) => !presentCategories.includes(c)
+        );
+        const dominant = data[0];
+
+        if (dominant && dominant.percentage >= 70) {
+          const missing = missingCategories[0];
+          setInsight(
+            missing
+              ? `You're heavily focused on ${CATEGORY_LABELS[dominant.category].toLowerCase()} habits. Consider adding a ${CATEGORY_LABELS[missing].toLowerCase()} habit for better balance.`
+              : `Most of your habits are ${CATEGORY_LABELS[dominant.category].toLowerCase()}-focused. Great commitment — make sure to stay well-rounded.`
+          );
+        } else if (missingCategories.length >= 3) {
+          setInsight(
+            `You're just getting started — try adding habits across different areas like mindfulness, physical, or social.`
+          );
+        } else if (missingCategories.length === 0) {
+          setInsight(
+            "Great balance! You have habits across all core wellness categories."
+          );
+        } else {
+          const missing = missingCategories[0];
+          setInsight(
+            `Solid mix of habits. You could round things out by adding a ${CATEGORY_LABELS[missing].toLowerCase()} habit.`
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching habit categories:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [user]);
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Layers className="h-5 w-5" />
+          Habit Category Balance
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        {loading ? (
+          <div className="text-center text-gray-500 py-4">Loading habit data...</div>
+        ) : categoryData.length === 0 ? (
+          <div className="text-center text-gray-500 py-4">
+            No habits yet. Add some habits to see your category balance.
+          </div>
+        ) : (
+          <div className="flex flex-col sm:flex-row gap-6 items-center">
+            {/* Donut chart */}
+            <div className="w-full sm:w-[200px] flex-shrink-0">
+              <ResponsiveContainer width="100%" height={180}>
+                <PieChart>
+                  <Pie
+                    data={categoryData.map((d) => ({
+                      name: d.category,
+                      value: d.count,
+                    }))}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={50}
+                    outerRadius={82}
+                    paddingAngle={2}
+                    dataKey="value"
+                  >
+                    {categoryData.map((d) => (
+                      <Cell
+                        key={d.category}
+                        fill={CATEGORY_COLORS[d.category] || "#9CA3AF"}
+                        stroke="transparent"
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "rgba(255,255,255,0.95)",
+                      border: "1px solid rgba(99,102,241,0.15)",
+                      borderRadius: "10px",
+                      fontSize: "12px",
+                    }}
+                    formatter={(value: number, name: string) => [
+                      `${value} habit${value !== 1 ? "s" : ""} (${categoryData.find((d) => d.category === name)?.percentage ?? 0}%)`,
+                      `${CATEGORY_EMOJIS[name] || "✨"} ${CATEGORY_LABELS[name] || name}`,
+                    ]}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Legend + insight */}
+            <div className="flex-1 w-full space-y-3">
+              {categoryData.map((d) => (
+                <div key={d.category} className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="w-3 h-3 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: CATEGORY_COLORS[d.category] || "#9CA3AF" }}
+                    />
+                    <span className="text-sm font-medium text-gray-700">
+                      {CATEGORY_EMOJIS[d.category]} {CATEGORY_LABELS[d.category] || d.category}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-24 bg-gray-200 rounded-full h-1.5">
+                      <div
+                        className="h-1.5 rounded-full"
+                        style={{
+                          width: `${d.percentage}%`,
+                          backgroundColor: CATEGORY_COLORS[d.category] || "#9CA3AF",
+                        }}
+                      />
+                    </div>
+                    <span className="text-xs text-gray-500 min-w-[3rem] text-right">
+                      {d.count} ({d.percentage}%)
+                    </span>
+                  </div>
+                </div>
+              ))}
+
+              {/* Insight callout */}
+              {insight && (
+                <div className="mt-4 pt-3 border-t border-gray-100">
+                  <p className="text-xs text-gray-500 leading-relaxed">💡 {insight}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 
