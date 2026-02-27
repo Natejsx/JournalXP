@@ -10,7 +10,8 @@ import {
   BookOpen,
   MessageCircle,
   Gift,
-  DollarSign,
+  Users,
+  ArrowRight,
 } from "lucide-react";
 
 interface EventStep {
@@ -26,9 +27,9 @@ const uhclEvent = {
   title: "Mid-Semester Mental Reset",
   subtitle: "Clarity Session",
   tagline:
-    "Complete one full guided reflection path in a calm, intentional environment — and leave feeling mentally clearer than when you walked in.",
+    "Complete one full guided reflection path in a calm, intentional environment, and leave feeling mentally clearer than when you walked in.",
   date: "Coming Soon",
-  location: "UHCL Campus — Quiet Space (TBD)",
+  location: "UHCL Campus, Quiet Space (TBD)",
   duration: "~1 hour – 1 hour 15 mins",
   budget: "$100 budget for snacks, posters & marketing",
   agenda: [
@@ -37,7 +38,7 @@ const uhclEvent = {
       duration: "15 min",
       title: "Arrive & Settle In",
       description:
-        "Soft lofi music, dim lighting, and snacks on the table. No ice breakers — just vibe. Grab a seat, grab a snack, and decompress.",
+        "Soft lofi music, dim lighting, and snacks on the table. No ice breakers, just vibe. Grab a seat, grab a snack, and decompress.",
       icon: <Music className="h-5 w-5" />,
     },
     {
@@ -53,7 +54,7 @@ const uhclEvent = {
       duration: "30 min",
       title: "Guided Reflection",
       description:
-        "Everyone picks a reflection path and completes it silently. Create an account if you don't have one — it takes 30 seconds. Show the completion screen and claim your sticker.",
+        "Everyone picks a reflection path and completes it silently. Create an account if you don't have one, it takes 30 seconds. Show the completion screen and claim your sticker.",
       icon: <Coffee className="h-5 w-5" />,
     },
     {
@@ -61,7 +62,7 @@ const uhclEvent = {
       duration: "10–15 min",
       title: "Optional Sharing",
       description:
-        "For anyone who'd like to share what came up during their reflection. Zero pressure — totally optional, fully respected.",
+        "For anyone who'd like to share what came up during their reflection. Zero pressure, totally optional, fully respected.",
       icon: <MessageCircle className="h-5 w-5" />,
     },
     {
@@ -141,41 +142,90 @@ const EventsPage = () => {
           className="space-y-10"
         >
           {/* Hero Card */}
-          <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-700 text-white shadow-2xl p-8 md:p-12">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(255,255,255,0.1),_transparent_60%)]" />
-            <div className="relative z-10">
-              <span className="inline-block text-xs font-semibold tracking-widest uppercase bg-white/20 px-3 py-1 rounded-full mb-4">
-                {uhclEvent.tag}
-              </span>
-              <h1 className="text-4xl md:text-5xl font-bold mb-2">
-                {uhclEvent.title}
-              </h1>
-              <p className="text-violet-200 text-xl font-medium mb-6">
-                {uhclEvent.subtitle}
-              </p>
-              <p className="text-white/80 text-base md:text-lg leading-relaxed max-w-2xl">
-                {uhclEvent.tagline}
-              </p>
+          <div className="relative rounded-3xl overflow-hidden shadow-[0_32px_80px_-12px_rgba(109,40,217,0.5)]">
+            {/* Deep gradient base */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#120727] via-[#1e0a4a] to-[#0d1a5c]" />
 
-              {/* Meta */}
-              <div className="mt-8 flex flex-wrap gap-4">
-                <div className="flex items-center gap-2 bg-white/15 rounded-lg px-4 py-2 text-sm">
-                  <CalendarDays className="h-4 w-4 text-violet-200" />
-                  <span>{uhclEvent.date}</span>
-                </div>
-                <div className="flex items-center gap-2 bg-white/15 rounded-lg px-4 py-2 text-sm">
-                  <Clock className="h-4 w-4 text-violet-200" />
-                  <span>{uhclEvent.duration}</span>
-                </div>
-                <div className="flex items-center gap-2 bg-white/15 rounded-lg px-4 py-2 text-sm">
-                  <MapPin className="h-4 w-4 text-violet-200" />
-                  <span>{uhclEvent.location}</span>
-                </div>
-                <div className="flex items-center gap-2 bg-white/15 rounded-lg px-4 py-2 text-sm">
-                  <DollarSign className="h-4 w-4 text-violet-200" />
-                  <span>{uhclEvent.budget}</span>
+            {/* Blur orbs for atmospheric depth */}
+            <div className="absolute -top-20 -right-16 w-[420px] h-[420px] rounded-full bg-violet-600/50 blur-[110px] pointer-events-none" />
+            <div className="absolute -bottom-24 -left-20 w-[380px] h-[380px] rounded-full bg-blue-700/40 blur-[100px] pointer-events-none" />
+            <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[220px] h-[220px] rounded-full bg-fuchsia-600/20 blur-[80px] pointer-events-none" />
+
+            {/* Subtle top border glow */}
+            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-violet-400/50 to-transparent" />
+
+            {/* Content */}
+            <div className="relative z-10 p-8 md:p-14 text-white">
+              {/* Top bar: label + logo */}
+              <div className="flex items-center justify-between mb-10">
+                <span className="text-[11px] font-bold tracking-[0.22em] uppercase text-violet-300/90 border border-violet-400/25 bg-violet-500/10 px-4 py-1.5 rounded-full backdrop-blur-sm">
+                  JournalXP × UHCL
+                </span>
+                <div className="text-sm font-bold tracking-tight opacity-60">
+                  <span className="text-violet-300">Journal</span>
+                  <span className="text-white">XP</span>
                 </div>
               </div>
+
+              {/* Emotional hook */}
+              <p className="text-violet-300/75 text-sm font-medium tracking-wide mb-3">
+                Feeling mentally overwhelmed?
+              </p>
+
+              {/* Main title */}
+              <h1 className="text-5xl md:text-[3.75rem] font-black text-white leading-[1.03] tracking-tight mb-5">
+                Mid-Semester<br />Mental Reset
+              </h1>
+
+              {/* Subtitle tag */}
+              <div className="inline-flex items-center gap-2 mb-7">
+                <span className="bg-white/10 text-violet-200 text-sm font-medium px-4 py-1.5 rounded-full border border-white/[0.12] backdrop-blur-sm">
+                  ✦ Clarity Session
+                </span>
+              </div>
+
+              {/* Outcome description */}
+              <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-xl mb-9">
+                Complete one guided reflection path in a calm, intentional space, and leave feeling clearer, lighter, and more grounded than when you walked in.
+              </p>
+
+              {/* Divider */}
+              <div className="w-full h-px bg-white/[0.08] mb-8" />
+
+              {/* Info chips — 2×2 grid */}
+              <div className="grid grid-cols-2 gap-3 max-w-md mb-8">
+                <div className="flex items-center gap-2.5 bg-white/[0.07] border border-white/[0.1] rounded-2xl px-4 py-3 backdrop-blur-sm">
+                  <CalendarDays className="h-4 w-4 text-violet-300 flex-shrink-0" />
+                  <span className="text-sm text-white/85 leading-tight">Pilot session at UHCL</span>
+                </div>
+                <div className="flex items-center gap-2.5 bg-white/[0.07] border border-white/[0.1] rounded-2xl px-4 py-3 backdrop-blur-sm">
+                  <Clock className="h-4 w-4 text-violet-300 flex-shrink-0" />
+                  <span className="text-sm text-white/85 leading-tight">~60–75 minutes</span>
+                </div>
+                <div className="flex items-center gap-2.5 bg-white/[0.07] border border-white/[0.1] rounded-2xl px-4 py-3 backdrop-blur-sm">
+                  <MapPin className="h-4 w-4 text-violet-300 flex-shrink-0" />
+                  <span className="text-sm text-white/85 leading-tight">UHCL Campus Quiet Space</span>
+                </div>
+                <div className="flex items-center gap-2.5 bg-white/[0.07] border border-white/[0.1] rounded-2xl px-4 py-3 backdrop-blur-sm">
+                  <Users className="h-4 w-4 text-violet-300 flex-shrink-0" />
+                  <span className="text-sm text-white/85 leading-tight">Open to everyone</span>
+                </div>
+              </div>
+
+              {/* Trust line */}
+              <p className="text-white/30 text-xs tracking-wide mb-8">
+                Guided by JournalXP, built to help people reset, reflect, and gain clarity
+              </p>
+
+              {/* CTA */}
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="group inline-flex items-center gap-3 bg-white text-violet-800 font-semibold text-sm px-7 py-3.5 rounded-full shadow-[0_8px_30px_rgba(109,40,217,0.4)] hover:shadow-[0_12px_40px_rgba(109,40,217,0.55)] hover:bg-violet-50 transition-all duration-200"
+              >
+                Reserve Your Spot
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform duration-150" />
+              </motion.button>
             </div>
           </div>
 
