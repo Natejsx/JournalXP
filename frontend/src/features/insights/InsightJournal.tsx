@@ -15,6 +15,7 @@ import {
   Star,
   Crown,
   Medal,
+  CheckSquare,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useUserData } from "@/context/UserDataContext";
@@ -105,6 +106,18 @@ export const InsightJournal = () => {
   // Get monthly goal from user preferences (default: 20)
   const monthlyGoalTarget = userData?.preferences?.monthlyJournalGoal || 20;
   const [journalGoal, setJournalGoal] = useState({ target: monthlyGoalTarget, current: 0 });
+
+  // Writing consistency calendar
+  const [timeWindow, setTimeWindow] = useState<30 | 60 | 90>(90);
+  const [consistencyDays, setConsistencyDays] = useState<
+    { date: Date; written: boolean; count: number; isToday: boolean }[]
+  >([]);
+  const [consistencyStats, setConsistencyStats] = useState({
+    writtenDays: 0,
+    totalDays: 0,
+    currentStreak: 0,
+    longestStreak: 0,
+  });
 
   // Mood scoring system (same as InsightMoodTrends)
   const MOOD_SCORES: { [key: string]: number } = {
