@@ -134,7 +134,7 @@ const EventsPage = () => {
 
       <Header title="Events" />
 
-      <main className="container mx-auto px-4 py-10 max-w-4xl">
+      <main className="container mx-auto px-4 py-10 max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -205,11 +205,11 @@ const EventsPage = () => {
                 </div>
                 <div className="flex items-center gap-2.5 bg-white/[0.07] border border-white/[0.1] rounded-2xl px-4 py-3 backdrop-blur-sm">
                   <Clock className="h-4 w-4 text-violet-300 flex-shrink-0" />
-                  <span className="text-sm text-white/85 leading-tight">~60–75 minutes</span>
+                  <span className="text-sm text-white/85 leading-tight">~60 - 75 minutes</span>
                 </div>
                 <div className="flex items-center gap-2.5 bg-white/[0.07] border border-white/[0.1] rounded-2xl px-4 py-3 backdrop-blur-sm">
                   <MapPin className="h-4 w-4 text-violet-300 flex-shrink-0" />
-                  <span className="text-sm text-white/85 leading-tight">UHCL Campus Quiet Space</span>
+                  <span className="text-sm text-white/85 leading-tight">UHCL Campus Quiet Space (TBD)</span>
                 </div>
                 <div className="flex items-center gap-2.5 bg-white/[0.07] border border-white/[0.1] rounded-2xl px-4 py-3 backdrop-blur-sm">
                   <Users className="h-4 w-4 text-violet-300 flex-shrink-0" />
@@ -249,9 +249,9 @@ const EventsPage = () => {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.08, duration: 0.4 }}
-                  className="flex gap-4 bg-white rounded-xl p-5 shadow-sm border border-violet-100"
+                  className="flex gap-4 bg-white/60 backdrop-blur-md rounded-2xl p-5 border border-white/70 shadow-[0_4px_20px_rgba(109,40,217,0.07)] hover:bg-white/75 hover:shadow-[0_6px_24px_rgba(109,40,217,0.12)] transition-all duration-200"
                 >
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-violet-100 flex items-center justify-center text-violet-600">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-violet-100/80 backdrop-blur-sm border border-violet-200/50 flex items-center justify-center text-violet-600 shadow-sm">
                     {step.icon}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -278,14 +278,16 @@ const EventsPage = () => {
           {/* Vibe + Timeline in 2 cols */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* The Vibe */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-violet-100">
-              <h2 className="text-lg font-bold text-gray-800 mb-4">
+            <div className="bg-white/60 backdrop-blur-md rounded-2xl p-6 border border-white/70 shadow-[0_4px_20px_rgba(109,40,217,0.07)]">
+              <h2 className="text-lg font-bold text-gray-800 mb-5">
                 The Vibe
               </h2>
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 {uhclEvent.vibe.map((v, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-gray-700">
-                    <span className="w-2 h-2 rounded-full bg-violet-400 flex-shrink-0" />
+                  <li key={i} className="flex items-center gap-3 text-sm text-gray-700">
+                    <span className="w-7 h-7 rounded-lg bg-violet-100/80 border border-violet-200/50 backdrop-blur-sm flex items-center justify-center flex-shrink-0">
+                      <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
+                    </span>
                     {v}
                   </li>
                 ))}
@@ -293,14 +295,16 @@ const EventsPage = () => {
             </div>
 
             {/* Content Goals */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-violet-100">
-              <h2 className="text-lg font-bold text-gray-800 mb-4">
+            <div className="bg-white/60 backdrop-blur-md rounded-2xl p-6 border border-white/70 shadow-[0_4px_20px_rgba(109,40,217,0.07)]">
+              <h2 className="text-lg font-bold text-gray-800 mb-5">
                 Content Creation Goals
               </h2>
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 {uhclEvent.contentGoals.map((g, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
-                    <span className="w-2 h-2 rounded-full bg-indigo-400 flex-shrink-0 mt-1.5" />
+                  <li key={i} className="flex items-start gap-3 text-sm text-gray-700">
+                    <span className="w-7 h-7 rounded-lg bg-indigo-100/80 border border-indigo-200/50 backdrop-blur-sm flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                    </span>
                     {g}
                   </li>
                 ))}
@@ -333,7 +337,7 @@ const EventsPage = () => {
           </div> */}
 
           {/* Potential Partners */}
-          <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-6 border border-indigo-100">
+          <div className="bg-white/60 backdrop-blur-md rounded-2xl p-6 border border-white/70 shadow-[0_4px_20px_rgba(109,40,217,0.07)]">
             <h2 className="text-lg font-bold text-gray-800 mb-3">
               Potential Partners
             </h2>
@@ -341,7 +345,7 @@ const EventsPage = () => {
               {uhclEvent.partners.map((p, i) => (
                 <span
                   key={i}
-                  className="text-sm bg-white text-indigo-700 border border-indigo-200 rounded-full px-4 py-1.5 font-medium"
+                  className="text-sm bg-violet-50/80 backdrop-blur-sm text-indigo-700 border border-violet-200/60 rounded-full px-4 py-1.5 font-medium"
                 >
                   {p}
                 </span>
