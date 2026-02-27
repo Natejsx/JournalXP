@@ -346,6 +346,55 @@ export const InsightJournal = () => {
     setJournalGoal({ target: monthlyGoalTarget, current: thisMonthCount });
   };
 
+  const calculateConsistencyCalendar = (
+    data: JournalEntryResponse[],
+    window: 30 | 60 | 90
+  ) => {
+    const today = new Date();
+    const startDate = subDays(today, window - 1);
+    const days = eachDayOfInterval({ start: startDate, end: today });
+
+    const calDays = days.map((day) => {
+      const dayEntries = data.filter((e) => isSameDay(parseISO(e.createdAt), day));
+      return {
+        date: day,
+        written: dayEntries.length > 0,
+        count: dayEntries.length,
+        isToday: isSameDay(day, today),
+      };
+    });
+
+    setConsistencyDays(calDays);
+
+    const writtenDays = calDays.filter((d) => d.written).length;
+
+    // Current streak from today backwards
+    let currentStreak = 0;
+    for (let i = calDays.length - 1; i >= 0; i--) {
+      if (calDays[i].written) currentStreak++;
+      else break;
+    }
+
+    // Longest streak in window
+    let longestStreak = 0;
+    let running = 0;
+    for (const d of calDays) {
+      if (d.written) {
+        running++;
+        longestStreak = Math.max(longestStreak, running);
+      } else {
+        running = 0;
+      }
+    }
+
+    setConsistencyStats({ writtenDays, totalDays: days.length, currentStreak, longestStreak });
+  };
+
+  // Recompute when entries load or time window changes
+  useEffect(() => {
+    calculateConsistencyCalendar(entries, timeWindow);
+  }, [entries, timeWindow]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const getHeatmapColor = (count: number): string => {
     if (count === 0) return "bg-gray-100";
     if (count === 1) return "bg-indigo-200";
@@ -640,6 +689,134 @@ export const InsightJournal = () => {
                 No journaling data yet. Start writing to see your activity!
               </p>
             )}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Writing Consistency Calendar */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2">
+              <CheckSquare className="h-5 w-5" />
+              Writing Consistency
+            </CardTitle>
+            <div className="flex gap-1">
+              {([30, 60, 90] as const).map((w) => (
+                <button
+                  key={w}
+                  onClick={() => setTimeWindow(w)}
+                  className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-colors ${
+                    timeWindow === w
+                      ? "bg-indigo-600 text-white"
+                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  }`}
+                >
+                  {w}d
+                </button>
+              ))}
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {/* Summary line */}
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm text-gray-600">
+              <span className="text-xl font-bold text-gray-900">
+                {consistencyStats.writtenDays}
+              </span>{" "}
+              <span className="text-gray-400">
+                / {consistencyStats.totalDays} days written
+              </span>
+            </p>
+            <span
+              className={`text-sm font-semibold ${
+                consistencyStats.totalDays > 0 &&
+                consistencyStats.writtenDays / consistencyStats.totalDays >= 0.7
+                  ? "text-emerald-600"
+                  : consistencyStats.totalDays > 0 &&
+                    consistencyStats.writtenDays / consistencyStats.totalDays >= 0.4
+                  ? "text-indigo-600"
+                  : "text-gray-500"
+              }`}
+            >
+              {consistencyStats.totalDays > 0
+                ? Math.round(
+                    (consistencyStats.writtenDays / consistencyStats.totalDays) * 100
+                  )
+                : 0}
+              % consistent
+            </span>
+          </div>
+
+          {/* Calendar grid — GitHub style: 7 rows (Sun–Sat), columns = weeks */}
+          <div className="overflow-x-auto pb-2">
+            {(() => {
+              const paddingDays =
+                consistencyDays.length > 0
+                  ? consistencyDays[0].date.getDay()
+                  : 0;
+              return (
+                <div
+                  className="grid grid-flow-col gap-1.5 w-fit"
+                  style={{
+                    gridTemplateRows: "repeat(7, 1.75rem)",
+                    gridAutoColumns: "1.75rem",
+                  }}
+                >
+                  {Array.from({ length: paddingDays }).map((_, i) => (
+                    <div key={`pad-${i}`} />
+                  ))}
+                  {consistencyDays.map((day, i) => (
+                    <div
+                      key={i}
+                      title={`${format(day.date, "MMM d, yyyy")} — ${
+                        day.written
+                          ? `${day.count} ${day.count === 1 ? "entry" : "entries"}`
+                          : "No entry"
+                      }`}
+                      className={`w-7 h-7 rounded-md cursor-default transition-colors ${
+                        day.isToday
+                          ? day.written
+                            ? "ring-2 ring-offset-1 ring-indigo-500 bg-indigo-500"
+                            : "ring-2 ring-offset-1 ring-gray-300 bg-gray-100"
+                          : day.written
+                          ? "bg-indigo-500 hover:bg-indigo-600"
+                          : "bg-gray-100 hover:bg-gray-200"
+                      }`}
+                    />
+                  ))}
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* Legend + streak stats */}
+          <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
+            <div className="flex items-center gap-3 text-xs text-gray-500">
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 rounded-sm bg-indigo-500" />
+                <span>Written</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 rounded-sm bg-gray-100 border border-gray-200" />
+                <span>Skipped</span>
+              </div>
+            </div>
+            <div className="flex gap-4 text-xs text-gray-500">
+              <span>
+                🔥 Streak{" "}
+                <span className="font-semibold text-gray-900">
+                  {consistencyStats.currentStreak}d
+                </span>
+              </span>
+              <span>
+                🏆 Best{" "}
+                <span className="font-semibold text-gray-900">
+                  {consistencyStats.longestStreak}d
+                </span>
+              </span>
+            </div>
           </div>
         </CardContent>
       </Card>
