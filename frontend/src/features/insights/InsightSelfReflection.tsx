@@ -138,7 +138,9 @@ export const InsightSelfReflection = () => {
   const totalEntries = userData?.journalStats?.totalJournalEntries || 0;
   const isEligible = totalEntries >= 15;
   const hasConsent = userData?.aiDataConsent?.journalAnalysisEnabled || false;
-  const dailyUsed = userData?.selfReflectionStats?.dailyGenerationCount ?? 0;
+  const rawDailyUsed = userData?.selfReflectionStats?.dailyGenerationCount ?? 0;
+  const dailyResetAt = userData?.selfReflectionStats?.dailyResetAt;
+  const dailyUsed = dailyResetAt && new Date(dailyResetAt) <= new Date() ? 0 : rawDailyUsed;
 
   // Initialize analysis mode from user's stored preference
   useEffect(() => {
