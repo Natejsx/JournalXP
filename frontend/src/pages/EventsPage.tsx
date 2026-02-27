@@ -216,7 +216,7 @@ const EventsPage = () => {
 
               {/* Outcome description */}
               <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-xl mb-9">
-                Complete one guided reflection path in a calm, intentional space, and leave feeling clearer, lighter, and more grounded than when you walked in.
+                This guided reflection session offers a calm, intentional space to step away from the noise and reset. Through JournalXP's structured reflection path, you'll gain clarity, release mental weight, and leave with a stronger sense of direction.
               </p>
 
               {/* Divider */}
