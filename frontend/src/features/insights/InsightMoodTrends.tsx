@@ -707,52 +707,91 @@ export const InsightMoodTrends: React.FC = () => {
 
           {moodDistribution.length === 0 ? (
             <div className="h-[260px] flex flex-col items-center justify-center">
-              <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center mb-3 bg-purple-500/15"
-              >
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-3 bg-purple-500/15">
                 <Heart className="h-6 w-6 text-purple-400/60" />
               </div>
               <p className="text-sm text-gray-500">No mood data yet</p>
             </div>
           ) : (
-            <div className="space-y-3">
-              {/* Top moods list */}
-              {moodDistribution.slice(0, 5).map((mood, index) => (
-                <div key={mood.mood} className="group">
-                  <div className="flex items-center justify-between mb-1.5">
-                    <div className="flex items-center gap-2">
-                      <span className="text-base">{MOOD_EMOJI[mood.mood] || "😐"}</span>
-                      <span className="text-sm font-medium text-gray-700 capitalize">
-                        {mood.mood}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-gray-500">{mood.count}x</span>
-                      <span className="text-xs font-semibold min-w-[2.5rem] text-right text-indigo-300">
-                        {mood.percentage}%
-                      </span>
-                    </div>
-                  </div>
-                  <div className="h-1.5 rounded-full bg-gray-200/50 overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${mood.percentage}%` }}
-                      transition={{ duration: 0.8, delay: 0.1 * index, ease: "easeOut" }}
-                      className="h-full rounded-full"
-                      style={{
-                        backgroundColor: MOOD_COLORS[mood.mood] || "#9CA3AF",
+            <div className="flex flex-col sm:flex-row gap-6 items-center">
+              {/* Pie chart */}
+              <div className="w-full sm:w-[220px] flex-shrink-0">
+                <ResponsiveContainer width="100%" height={200}>
+                  <PieChart>
+                    <Pie
+                      data={moodDistribution.map((m) => ({
+                        name: m.mood,
+                        value: m.count,
+                      }))}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={55}
+                      outerRadius={90}
+                      paddingAngle={2}
+                      dataKey="value"
+                    >
+                      {moodDistribution.map((m) => (
+                        <Cell
+                          key={m.mood}
+                          fill={MOOD_COLORS[m.mood] || "#9CA3AF"}
+                          stroke="transparent"
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "rgba(255,255,255,0.9)",
+                        backdropFilter: "blur(8px)",
+                        border: "1px solid rgba(99,102,241,0.15)",
+                        borderRadius: "10px",
+                        fontSize: "12px",
+                        boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
                       }}
+                      formatter={(value: number, name: string) => [
+                        `${value}x (${moodDistribution.find((m) => m.mood === name)?.percentage ?? 0}%)`,
+                        `${MOOD_EMOJI[name] || "😐"} ${name}`,
+                      ]}
                     />
-                  </div>
-                </div>
-              ))}
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
 
-              {/* Show remaining count */}
-              {moodDistribution.length > 5 && (
-                <p className="text-xs text-gray-600 text-center pt-1">
-                  +{moodDistribution.length - 5} more moods
-                </p>
-              )}
+              {/* Top moods list */}
+              <div className="flex-1 w-full space-y-3">
+                {moodDistribution.slice(0, 5).map((mood, index) => (
+                  <div key={mood.mood} className="group">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <div className="flex items-center gap-2">
+                        <span className="text-base">{MOOD_EMOJI[mood.mood] || "😐"}</span>
+                        <span className="text-sm font-medium text-gray-700 capitalize">
+                          {mood.mood}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-gray-500">{mood.count}x</span>
+                        <span className="text-xs font-semibold min-w-[2.5rem] text-right text-indigo-300">
+                          {mood.percentage}%
+                        </span>
+                      </div>
+                    </div>
+                    <div className="h-1.5 rounded-full bg-gray-200/50 overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${mood.percentage}%` }}
+                        transition={{ duration: 0.8, delay: 0.1 * index, ease: "easeOut" }}
+                        className="h-full rounded-full"
+                        style={{ backgroundColor: MOOD_COLORS[mood.mood] || "#9CA3AF" }}
+                      />
+                    </div>
+                  </div>
+                ))}
+
+                {moodDistribution.length > 5 && (
+                  <p className="text-xs text-gray-600 text-center pt-1">
+                    +{moodDistribution.length - 5} more moods
+                  </p>
+                )}
+              </div>
             </div>
           )}
         </motion.div>

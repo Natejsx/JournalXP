@@ -6,13 +6,21 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  PieChart,
+  PieChart as PieChartIcon,
   Award,
   Flame,
   Trophy,
   Calendar,
+  Layers,
 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import { getMoodColorInsight } from "@/utils/InsightUtils";
 import { useState, useEffect } from "react";
 import {
@@ -246,7 +254,7 @@ const MoodDistribution = () => {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <PieChart className="h-5 w-5" />
+          <PieChartIcon className="h-5 w-5" />
           Mood Distribution
         </CardTitle>
       </CardHeader>
