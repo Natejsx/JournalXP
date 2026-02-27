@@ -23,6 +23,7 @@ import { ReflectionArchiveCard } from "@/features/dashboard/ReflectionArchiveCar
 import { FocusTapCard } from "@/features/dashboard/FocusTapCard";
 import { NotebookCard } from "@/features/dashboard/NotebookCard";
 import { GuidedReflectionCard } from "@/features/dashboard/GuidedReflectionCard";
+import { EventsCard } from "@/features/dashboard/EventsCard";
 import { useAuth } from "@/context/AuthContext";
 import { SEO } from "@/components/SEO";
 
@@ -43,6 +44,7 @@ const cardComponents: { [key: string]: React.ComponentType } = {
   notebook: NotebookCard,
   "reflection-archive": ReflectionArchiveCard,
   "guided-reflection": GuidedReflectionCard,
+  events: EventsCard,
   // "focus-tap": FocusTapCard,
   // blog: BlogCard,
   // community: CommunityCard,
@@ -72,6 +74,7 @@ const allCardIds = [
   'insights',
   'achievements',
   'profile',
+  'events',
   'about',
   'blog',
   'community',

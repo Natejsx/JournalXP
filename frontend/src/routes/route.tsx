@@ -42,6 +42,7 @@ const GuidedReflectionPage = lazy(() => import("@/pages/GuidedReflectionPage"));
 const GuidedReflectionPathPage = lazy(() => import("@/pages/GuidedReflectionPathPage"));
 const HelpOpportunitiesPage = lazy(() => import("@/pages/HelpOpportunitiesPage"));
 const UnsubscribePage = lazy(() => import("@/pages/UnsubscribePage"));
+const EventsPage = lazy(() => import("@/pages/EventsPage"));
 
 
 const JournalRoutes = () => {
@@ -83,6 +84,7 @@ const JournalRoutes = () => {
         <Route path="/guided-reflection/:pathId" element={<GuidedReflectionPathPage />} />
         <Route path="/help-opportunities" element={<HelpOpportunitiesPage />} />
         <Route path="/unsubscribe" element={<UnsubscribePage />} />
+        <Route path="/events" element={<EventsPage />} />
       </Routes>
     </Suspense>
   );
