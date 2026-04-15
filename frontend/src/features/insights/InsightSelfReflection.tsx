@@ -102,6 +102,7 @@ export const InsightSelfReflection = () => {
   const [loading, setLoading] = useState(false);
   const [showOptIn, setShowOptIn] = useState(false);
   const [reflection, setReflection] = useState<SelfReflectionGenerateResponse | null>(null);
+  const [localDailyUsed, setLocalDailyUsed] = useState<number | null>(null);
   const [showTransparency, setShowTransparency] = useState(false);
   const [analysisMode, setAnalysisMode] = useState<'metadata' | 'full-content'>('full-content');
   const [loadingMessageIndex, setLoadingMessageIndex] = useState(0);
@@ -140,7 +141,9 @@ export const InsightSelfReflection = () => {
   const hasConsent = userData?.aiDataConsent?.journalAnalysisEnabled || false;
   const rawDailyUsed = userData?.selfReflectionStats?.dailyGenerationCount ?? 0;
   const dailyResetAt = userData?.selfReflectionStats?.dailyResetAt;
-  const dailyUsed = dailyResetAt && new Date(dailyResetAt) <= new Date() ? 0 : rawDailyUsed;
+  const contextDailyUsed = dailyResetAt && new Date(dailyResetAt) <= new Date() ? 0 : rawDailyUsed;
+  // Prefer the locally tracked count (from API response) over context data to avoid refresh timing issues
+  const dailyUsed = localDailyUsed !== null ? localDailyUsed : contextDailyUsed;
 
   // Initialize analysis mode from user's stored preference
   useEffect(() => {
@@ -221,11 +224,13 @@ export const InsightSelfReflection = () => {
 
       const result = await generateSelfReflection();
       setReflection(result);
+      // Use the API's authoritative remaining count to update the counter immediately
+      setLocalDailyUsed(DAILY_LIMIT - result.metadata.remainingToday);
       await refreshUserData();
 
       showToast({
         title: "Reflection Generated",
-        description: `You have ${Math.max(0, DAILY_LIMIT - (dailyUsed + 1))} reflections remaining today.`,
+        description: `You have ${result.metadata.remainingToday} reflection${result.metadata.remainingToday === 1 ? "" : "s"} remaining today.`,
       });
     } catch (error: any) {
       console.error("Error generating reflection:", error);
