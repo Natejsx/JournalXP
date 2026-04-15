@@ -1,13 +1,16 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Shield, Heart, Zap, LogIn, Star, Lock, GraduationCap, Brain } from "lucide-react";
+import { ArrowRight, LogIn, Star, Lock, GraduationCap, Brain, LayoutGrid, Sparkles, Share2, Check } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/context/ThemeContext";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
 export const AboutHero = () => {
   const { theme } = useTheme();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [copied, setCopied] = useState(false);
   const [stats, setStats] = useState({
     users: 104,
     entries: 1847,
@@ -30,16 +33,44 @@ export const AboutHero = () => {
   }, []);
 
   const handleSeeHowItWorks = () => {
-    // Change hash directly to trigger hashchange event and switch tab
     window.location.hash = "features";
-
-    // Scroll to features section after tab change
     setTimeout(() => {
       const featuresSection = document.getElementById("features-section");
       if (featuresSection) {
         featuresSection.scrollIntoView({ behavior: "smooth" });
       }
     }, 150);
+  };
+
+  const handleWhatIsNew = () => {
+    window.location.hash = "roadmap";
+    setTimeout(() => {
+      const roadmapSection = document.getElementById("roadmap-section");
+      if (roadmapSection) {
+        roadmapSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 150);
+  };
+
+  const handleShare = async () => {
+    const url = "https://journalxp.com";
+    const shareData = {
+      title: "JournalXP",
+      text: "Level up your mental wellness with JournalXP: game-like journaling, habit tracking, and an AI companion. 100% free.",
+      url,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch {
+        // User cancelled share, do nothing
+      }
+    } else {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   return (
@@ -51,31 +82,6 @@ export const AboutHero = () => {
       </div>
 
       <div className="container mx-auto px-4 py-20 relative z-10">
-        {/* Stats Ticker */}
-        {/* <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-wrap justify-center gap-6 mb-12"
-        >
-          <div className="text-center">
-            <div className="text-3xl font-bold">{stats.users.toLocaleString()}</div>
-            <div className="text-sm text-purple-200">Active Users</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold">{stats.entries.toLocaleString()}</div>
-            <div className="text-sm text-purple-200">Journal Entries</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold">{stats.streaks.toLocaleString()}</div>
-            <div className="text-sm text-purple-200">Active Streaks</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold">{(stats.xp)}</div>
-            <div className="text-sm text-purple-200">Total XP Earned</div>
-          </div>
-        </motion.div> */}
-
         {/* Main Hero Content */}
         <div className="max-w-4xl mx-auto text-center">
           <motion.h1
@@ -116,27 +122,65 @@ export const AboutHero = () => {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
           >
-            <a
-              href="/signup"
-              className="px-8 py-4 bg-white text-indigo-600 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-all transform hover:scale-105 flex items-center justify-center gap-2 shadow-xl"
-              style={{ color: theme.colors.primary }}
-            >
-              Start Your Journey (Free)
-              <ArrowRight className="h-5 w-5" />
-            </a>
-            <button
-              onClick={handleSeeHowItWorks}
-              className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold text-lg hover:bg-white hover:text-indigo-600 transition-all flex items-center justify-center gap-2"
-            >
-              See How It Works
-            </button>
-            <a
-              href="/login"
-              className="px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white rounded-lg font-semibold text-lg hover:bg-white/20 hover:border-white/50 transition-all flex items-center justify-center gap-2"
-            >
-              <LogIn className="h-5 w-5" />
-              Log In
-            </a>
+            {user ? (
+              <>
+                <Link
+                  to="/all-cards"
+                  className="px-8 py-4 bg-white rounded-lg font-semibold text-lg hover:bg-gray-100 transition-all transform hover:scale-105 flex items-center justify-center gap-2 shadow-xl"
+                  style={{ color: theme.colors.primary }}
+                >
+                  <LayoutGrid className="h-5 w-5" />
+                  Explore All Features
+                </Link>
+                <button
+                  onClick={handleWhatIsNew}
+                  className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold text-lg hover:bg-white hover:text-indigo-600 transition-all flex items-center justify-center gap-2"
+                >
+                  <Sparkles className="h-5 w-5" />
+                  What's New
+                </button>
+                <button
+                  onClick={handleShare}
+                  className="px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white rounded-lg font-semibold text-lg hover:bg-white/20 hover:border-white/50 transition-all flex items-center justify-center gap-2"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="h-5 w-5 text-green-300" />
+                      Link Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Share2 className="h-5 w-5" />
+                      Share JournalXP
+                    </>
+                  )}
+                </button>
+              </>
+            ) : (
+              <>
+                <a
+                  href="/signup"
+                  className="px-8 py-4 bg-white text-indigo-600 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-all transform hover:scale-105 flex items-center justify-center gap-2 shadow-xl"
+                  style={{ color: theme.colors.primary }}
+                >
+                  Start Your Journey (Free)
+                  <ArrowRight className="h-5 w-5" />
+                </a>
+                <button
+                  onClick={handleSeeHowItWorks}
+                  className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold text-lg hover:bg-white hover:text-indigo-600 transition-all flex items-center justify-center gap-2"
+                >
+                  See How It Works
+                </button>
+                <a
+                  href="/login"
+                  className="px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white rounded-lg font-semibold text-lg hover:bg-white/20 hover:border-white/50 transition-all flex items-center justify-center gap-2"
+                >
+                  <LogIn className="h-5 w-5" />
+                  Log In
+                </a>
+              </>
+            )}
           </motion.div>
 
           {/* Trust Row */}
