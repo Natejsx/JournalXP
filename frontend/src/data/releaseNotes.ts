@@ -11,6 +11,28 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "3.1.3",
+    date: "2026-04-14",
+    title: "UI Polish, Smarter About Page & Self-Reflection Fix",
+    highlights: [
+      "Dashboard cards now use glassmorphism styling consistent with the rest of the app",
+      "Logged-in users see contextual actions on the About page instead of sign-up CTAs",
+      "Self-reflection daily counter now updates instantly after generating a reflection",
+      "Events card removed from the All Features page",
+    ],
+    improvements: [
+      "Dashboard cards (Journal, Sunday, Habits, Tasks, etc.) redesigned with frosted glass surfaces",
+      "About page hero now shows 'Explore All Features', 'What's New', and 'Share JournalXP' buttons for logged-in users instead of the sign-up and login CTAs",
+      "'What's New' button on the About page scrolls directly to the Roadmap tab",
+      "'Share JournalXP' uses the native Web Share API on supported devices with a clipboard fallback and 'Link Copied!' confirmation on desktop",
+    ],
+    bugFixes: [
+      "Fixed self-reflection daily usage counter (5/5 today) not updating after generating a reflection, counter now reads from the API response directly instead of waiting on a context refresh",
+      "Fixed toast message after generating a reflection showing an incorrect remaining count due to a stale closure",
+      "Removed Events card from the All Features (See All) page",
+    ],
+  },
+  {
     version: "3.1.0",
     date: "2026-02-27",
     title: "Insights Overhaul, Events Page & Bug Fixes",

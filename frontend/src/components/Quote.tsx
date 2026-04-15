@@ -37,7 +37,7 @@ export const Blockquote = () => {
 
       <footer className="mt-4 pt-4 border-t border-gray-100">
         <div className="text-sm font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-          — {randomQuote.author}
+          - {randomQuote.author}
         </div>
       </footer>
     </motion.blockquote>

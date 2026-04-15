@@ -153,7 +153,7 @@ export const FounderStoryTimeline = () => {
               "Your story matters. Writing it down is the first step toward understanding it."
             </blockquote>
             <p className="text-center text-gray-600 mt-4">
-              — Nathaniel Paz, Creator
+              - Nathaniel Paz, Creator
             </p>
           </CardContent>
         </Card>
