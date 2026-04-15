@@ -53,21 +53,20 @@ export const AboutHero = () => {
   };
 
   const handleShare = async () => {
-    const url = "https://journalxp.com";
     const shareData = {
       title: "JournalXP",
       text: "Level up your mental wellness with JournalXP: game-like journaling, habit tracking, and an AI companion. 100% free.",
-      url,
+      url: "https://journalxp.com",
     };
 
-    if (navigator.share) {
+    if (navigator.canShare && navigator.canShare(shareData)) {
       try {
         await navigator.share(shareData);
       } catch {
         // User cancelled share, do nothing
       }
     } else {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText("https://journalxp.com");
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
