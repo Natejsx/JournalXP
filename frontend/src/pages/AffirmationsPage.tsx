@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Check, Plus, X, RotateCcw, Save, ArrowLeft, Sparkles } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Nav } from "@/components/Nav";
 import { useUserData } from "@/context/UserDataContext";
 import { useTheme } from "@/context/ThemeContext";
@@ -201,25 +200,38 @@ const AffirmationsPage = () => {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="flex gap-2 mb-6"
+          className="mb-6 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md shadow-lg p-4"
+          style={{ borderColor: `${theme.colors.primary}30` }}
         >
-          <Input
+          <textarea
             placeholder="Write your own affirmation..."
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && addCustom()}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                addCustom();
+              }
+            }}
             maxLength={200}
-            className="flex-1"
+            rows={3}
+            className="w-full resize-none bg-transparent text-sm placeholder:text-muted-foreground/60 focus:outline-none leading-relaxed"
           />
-          <Button
-            onClick={addCustom}
-            disabled={!inputValue.trim()}
-            size="icon"
-            style={{ background: theme.colors.primary }}
-            className="text-white hover:opacity-90 shrink-0"
-          >
-            <Plus className="h-4 w-4" />
-          </Button>
+          <div className="flex items-center justify-between mt-2 pt-2 border-t border-white/10">
+            <span className="text-xs text-muted-foreground/60">
+              {inputValue.length} / 200
+            </span>
+            <Button
+              onClick={addCustom}
+              disabled={!inputValue.trim()}
+              size="sm"
+              style={{ background: theme.colors.primary }}
+              className="text-white hover:opacity-90 gap-1.5"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              Add
+            </Button>
+          </div>
         </motion.div>
 
         {/* Affirmation cards */}
