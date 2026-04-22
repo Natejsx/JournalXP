@@ -131,7 +131,7 @@ const AffirmationsPage = () => {
             ? "Reverted to default affirmations"
             : "Your affirmations have been updated",
       });
-      navigate("/home");
+      navigate("/");
     } catch (error: any) {
       showToast({
         title: "Error",
@@ -149,35 +149,42 @@ const AffirmationsPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <Nav />
-      <div className="max-w-3xl mx-auto px-4 py-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
+
+      {/* Hero banner */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="relative overflow-hidden mb-8"
+        style={{ background: theme.colors.gradient }}
+      >
+        {/* Decorative orbs */}
+        <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-56 h-56 bg-white/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4 pointer-events-none" />
+
+        <div className="relative z-10 max-w-3xl mx-auto px-6 py-10">
           <Link
-            to="/home"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
+            to="/"
+            className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white mb-6 transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
           </Link>
 
-          <div className="flex items-center gap-3 mb-2">
-            <div
-              className="p-2 rounded-xl"
-              style={{ background: theme.colors.gradient }}
-            >
-              <Sparkles className="h-5 w-5 text-white" />
+          <div className="flex items-center gap-3 mb-3">
+            <div className="p-2.5 rounded-2xl bg-white/20 backdrop-blur-sm">
+              <Sparkles className="h-6 w-6 text-white" />
             </div>
-            <h1 className="text-2xl font-bold">My Affirmations</h1>
+            <h1 className="text-3xl font-bold text-white">My Affirmations</h1>
           </div>
-          <p className="text-muted-foreground text-sm">
-            Pick {MIN}-{MAX} affirmations to rotate on your welcome banner, or write your own.
-            Leave none selected to use the defaults.
+          <p className="text-white/75 text-sm max-w-md leading-relaxed">
+            Choose {MIN}-{MAX} affirmations to rotate on your welcome banner, or write your own.
+            Leave none selected to keep the defaults.
           </p>
-        </motion.div>
+        </div>
+      </motion.div>
+
+      <div className="max-w-3xl mx-auto px-4 pb-12">
 
         {/* Counter + actions */}
         <div className="flex items-center justify-between mb-5">
