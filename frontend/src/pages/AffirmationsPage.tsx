@@ -248,16 +248,18 @@ const AffirmationsPage = () => {
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.2 }}
                   onClick={() => toggle(text)}
-                  className={`relative flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-all select-none ${
-                    isSelected
-                      ? "border-transparent shadow-sm"
-                      : "border-border hover:border-muted-foreground/40 bg-card"
-                  }`}
-                  style={
-                    isSelected
-                      ? { background: `${theme.colors.primary}18`, borderColor: theme.colors.primary }
-                      : undefined
-                  }
+                  className="relative flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-all select-none backdrop-blur-md shadow-sm"
+                  style={{
+                    background: isSelected
+                      ? `${theme.colors.primary}28`
+                      : "rgba(255,255,255,0.08)",
+                    borderColor: isSelected
+                      ? theme.colors.primary
+                      : `${theme.colors.primary}35`,
+                    boxShadow: isSelected
+                      ? `0 0 0 1px ${theme.colors.primary}50, 0 4px 12px ${theme.colors.primary}20`
+                      : `0 2px 8px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.15)`,
+                  }}
                 >
                   {/* Checkbox */}
                   <div
@@ -269,7 +271,7 @@ const AffirmationsPage = () => {
                     {isSelected && <Check className="h-3 w-3 text-white" strokeWidth={3} />}
                   </div>
 
-                  <p className={`text-sm leading-relaxed flex-1 ${isSelected ? "font-medium" : "text-muted-foreground"}`}>
+                  <p className={`text-sm leading-relaxed flex-1 ${isSelected ? "font-medium" : "text-foreground/70"}`}>
                     {text}
                   </p>
 
