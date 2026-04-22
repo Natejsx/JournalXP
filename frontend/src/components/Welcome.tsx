@@ -21,6 +21,7 @@ import {
   BookOpen,
   Compass,
   Users,
+  Pencil,
   LucideIcon,
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -53,17 +54,27 @@ const iconMap: Record<string, LucideIcon> = {
 
 // For switching out quotes on the home page
 export const QuoteBanner = () => {
+  const { userData } = useUserData();
   const [index, setIndex] = useState(0);
+
+  const pool =
+    (userData?.preferences?.customAffirmations?.length ?? 0) >= 3
+      ? userData!.preferences!.customAffirmations!
+      : welcomeQuotes;
+
+  useEffect(() => {
+    setIndex(0);
+  }, [pool.length]);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % welcomeQuotes.length);
+      setIndex((prev) => (prev + 1) % pool.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, []);
+  }, [pool]);
 
   return (
-    <motion.div className="pr-4">
+    <motion.div className="pr-4 group/quotebanner relative">
       <AnimatePresence mode="wait">
         <motion.div
           key={index}
@@ -73,9 +84,18 @@ export const QuoteBanner = () => {
           transition={{ duration: 0.6 }}
           className="text-white/90 text-base sm:text-lg mb-6"
         >
-          <p>{welcomeQuotes[index]}</p>
+          <p>{pool[index]}</p>
         </motion.div>
       </AnimatePresence>
+      {userData && (
+        <Link
+          to="/affirmations"
+          className="absolute top-0 right-0 opacity-0 group-hover/quotebanner:opacity-100 transition-opacity p-1.5 rounded-lg bg-white/20 hover:bg-white/30"
+          title="Customize affirmations"
+        >
+          <Pencil className="h-3.5 w-3.5 text-white" />
+        </Link>
+      )}
     </motion.div>
   );
 };
