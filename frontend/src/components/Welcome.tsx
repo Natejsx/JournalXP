@@ -21,7 +21,6 @@ import {
   BookOpen,
   Compass,
   Users,
-  Pencil,
   LucideIcon,
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -87,15 +86,6 @@ export const QuoteBanner = () => {
           {pool[index]}
         </motion.p>
       </AnimatePresence>
-      {userData && (
-        <Link
-          to="/affirmations"
-          className="inline-flex items-center gap-1.5 mt-2 text-white/60 hover:text-white/90 transition-colors text-xs"
-        >
-          <Pencil className="h-3 w-3" />
-          Customize affirmations
-        </Link>
-      )}
     </div>
   );
 };

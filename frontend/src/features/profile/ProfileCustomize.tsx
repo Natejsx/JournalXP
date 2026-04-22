@@ -352,6 +352,26 @@ export const ProfileCustomize = () => {
         </div>
       </div>
 
+      {/* Welcome Banner Affirmations */}
+      <div className="bg-white rounded-xl shadow-sm p-6">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-5 w-5 text-amber-500" />
+            <h3 className="text-lg font-semibold text-gray-800">Welcome Banner Affirmations</h3>
+          </div>
+          <Link
+            to="/affirmations"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+          >
+            Customize
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 debug" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </Link>
+        </div>
+        <p className="text-sm text-gray-600">
+          Choose 3-8 affirmations to rotate on your welcome banner, or write your own.
+        </p>
+      </div>
+
       {/* Welcome Banner Quick Actions */}
       <div className="bg-white rounded-xl shadow-sm p-6">
         <div className="flex items-center gap-2 mb-4">
