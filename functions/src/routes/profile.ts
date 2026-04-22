@@ -149,7 +149,7 @@ router.post("/username", standardRateLimit, requireAuth, async (req: Authenticat
 router.patch("/preferences", standardRateLimit, requireAuth, async (req: AuthenticatedRequest, res) => {
   try {
     const uid = req.user!.uid;
-    const { theme, notifications, emailNotifications, monthlyJournalGoal, dashboardCards, welcomeButtons, showUpdatesBanner, journalWordCountGoal } = req.body;
+    const { theme, notifications, emailNotifications, monthlyJournalGoal, dashboardCards, welcomeButtons, showUpdatesBanner, journalWordCountGoal, customAffirmations } = req.body;
 
     console.log("Preferences update request body:", req.body);
     console.log("dashboardCards value:", dashboardCards);
@@ -287,6 +287,34 @@ router.patch("/preferences", standardRateLimit, requireAuth, async (req: Authent
         });
       }
       preferencesUpdate.journalWordCountGoal = journalWordCountGoal;
+    }
+
+    if (customAffirmations !== undefined) {
+      if (!Array.isArray(customAffirmations)) {
+        return res.status(400).json({
+          error: "Invalid customAffirmations",
+          details: "customAffirmations must be an array",
+          code: "INVALID_CUSTOM_AFFIRMATIONS",
+        });
+      }
+      // Empty array = use defaults (cleared)
+      if (customAffirmations.length > 0) {
+        if (customAffirmations.length < 3 || customAffirmations.length > 8) {
+          return res.status(400).json({
+            error: "Invalid customAffirmations count",
+            details: "Choose between 3 and 8 affirmations",
+            code: "INVALID_CUSTOM_AFFIRMATIONS_COUNT",
+          });
+        }
+        if (!customAffirmations.every((a: any) => typeof a === "string" && a.trim().length > 0 && a.length <= 200)) {
+          return res.status(400).json({
+            error: "Invalid affirmation text",
+            details: "Each affirmation must be a non-empty string under 200 characters",
+            code: "INVALID_AFFIRMATION_TEXT",
+          });
+        }
+      }
+      preferencesUpdate.customAffirmations = customAffirmations;
     }
 
     if (Object.keys(preferencesUpdate).length === 0) {
