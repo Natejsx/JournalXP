@@ -261,7 +261,7 @@ export const ProfileCustomize = () => {
   return (
     <TabsContent value="customize" className="space-y-6">
       {/* Theme Selection */}
-      <div className="bg-white rounded-xl shadow-sm p-6">
+      <div className="bg-white rounded-xl shadow-sm border-2 border-gray-200 p-6">
         <div className="flex items-center gap-2 mb-4">
           <Palette className="h-5 w-5 text-indigo-500" />
           <h3 className="text-lg font-semibold text-gray-800">App Theme</h3>
@@ -354,7 +354,7 @@ export const ProfileCustomize = () => {
       </div>
 
       {/* Welcome Banner Affirmations */}
-      <div className="bg-white rounded-xl shadow-sm p-6">
+      <div className="bg-white rounded-xl shadow-sm border-2 border-gray-200 p-6">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-amber-500" />
@@ -364,7 +364,6 @@ export const ProfileCustomize = () => {
             to="/affirmations"
             className="inline-flex items-center gap-2 px-5 py-3 rounded-lg text-sm font-medium text-white bg-indigo-500 hover:bg-indigo-600 active:scale-95 transition-all shadow-sm"
           >
-            <Sparkles className="h-4 w-4" />
             Customize
             <ArrowRight className="h-4 w-4" />
           </Link>
@@ -375,7 +374,7 @@ export const ProfileCustomize = () => {
       </div>
 
       {/* Welcome Banner Quick Actions */}
-      <div className="bg-white rounded-xl shadow-sm p-6">
+      <div className="bg-white rounded-xl shadow-sm border-2 border-gray-200 p-6">
         <div className="flex items-center gap-2 mb-4">
           <Sparkles className="h-5 w-5 text-amber-500" />
           <h3 className="text-lg font-semibold text-gray-800">Welcome Banner Quick Actions</h3>
@@ -512,7 +511,7 @@ export const ProfileCustomize = () => {
       </div>
 
       {/* Homepage Layout */}
-      <div className="bg-white rounded-xl shadow-sm p-6">
+      <div className="bg-white rounded-xl shadow-sm border-2 border-gray-200 p-6">
         <div className="flex items-center gap-2 mb-4">
           <LayoutGrid className="h-5 w-5 text-indigo-500" />
           <h3 className="text-lg font-semibold text-gray-800">Homepage Layout</h3>
