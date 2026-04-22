@@ -25,6 +25,7 @@ import {
   BookOpen,
   Compass,
   Users,
+  ArrowRight,
   LucideIcon,
 } from "lucide-react";
 
@@ -361,10 +362,11 @@ export const ProfileCustomize = () => {
           </div>
           <Link
             to="/affirmations"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-lg text-sm font-medium text-white bg-indigo-500 hover:bg-indigo-600 active:scale-95 transition-all shadow-sm"
           >
+            <Sparkles className="h-4 w-4" />
             Customize
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 debug" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
         <p className="text-sm text-gray-600">
