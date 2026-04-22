@@ -4,13 +4,11 @@ import { useTheme } from "@/context/ThemeContext";
 
 const updates = [
   {
-    date: "February 27th, 2026",
+    date: "April 21st, 2026",
     content: [
-      "New Writing Consistency Calendar in Journal Insights, see your daily writing habits at a glance with a 30/60/90-day toggle and streak tracking.",
-      "Habit Category Balance donut chart now shows how your habits break down by category (mindfulness, physical, social, productivity) in the Patterns tab.",
-      "Mood Trends now includes a donut chart alongside the bar view for a clearer picture of your emotional patterns.",
-      "Fixed a bug where the daily self-reflection counter wasn't resetting at midnight on the frontend.",
-      "New Events page added, check out the JournalXP x UHCL Mid-Semester Mental Reset event.",
+      "New Affirmations page, choose 3 to 8 affirmations to rotate on your welcome banner, pick from the defaults or write your own.",
+      "Affirmation preferences are saved to your profile and accessible from the Customize tab in your profile settings.",
+      "Welcome banner now rotates your custom affirmations instead of the defaults when a personal set is saved.",
     ],
   },
 ];
@@ -53,7 +51,7 @@ export const UpdatesBanner = () => {
             </div>
             <div className="text-left">
               <h3 className="font-semibold text-sm">
-                What's New in JournalXP v3.1.0
+                What's New in JournalXP v3.1.4 ✨
               </h3>
               <p className="text-xs text-indigo-100">
                 Click to see all updates and new features
@@ -80,7 +78,7 @@ export const UpdatesBanner = () => {
       <div className="flex items-center gap-2 mb-2">
         <Info className="text-indigo-500 w-4 h-4" />
         <h2 className="text-indigo-700 font-semibold text-sm">
-          Latest Update | Version 3.1.0
+          Latest Update | Version 3.1.4
         </h2>
       </div>
 
