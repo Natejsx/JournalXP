@@ -178,6 +178,7 @@ export interface UserClient {
     dashboardCards?: string[]; // Array of card IDs in preferred order (max 6)
     welcomeButtons?: string[]; // Array of card IDs for welcome banner quick actions (exactly 3)
     showUpdatesBanner?: boolean; // Whether to show the updates banner on homepage
+    customAffirmations?: string[]; // 3–8 user-selected or custom affirmations for the welcome banner
     journalWordCountGoal?: number; // Word count goal for journal entries (50-1000, default 250)
     emailPreferences?: {
       weeklyDigest: boolean; // Personalized weekly activity summary email
