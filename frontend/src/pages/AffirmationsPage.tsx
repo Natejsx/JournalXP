@@ -4,7 +4,7 @@ import { Check, Plus, X, RotateCcw, Save, ArrowLeft, Sparkles } from "lucide-rea
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Nav } from "@/features/nav/Nav";
+import { Nav } from "@/components/Nav";
 import { useUserData } from "@/context/UserDataContext";
 import { useTheme } from "@/context/ThemeContext";
 import { useToast } from "@/hooks/useToast";
@@ -175,7 +175,7 @@ const AffirmationsPage = () => {
             <h1 className="text-2xl font-bold">My Affirmations</h1>
           </div>
           <p className="text-muted-foreground text-sm">
-            Pick {MIN}–{MAX} affirmations to rotate on your welcome banner, or write your own.
+            Pick {MIN}-{MAX} affirmations to rotate on your welcome banner, or write your own.
             Leave none selected to use the defaults.
           </p>
         </motion.div>
@@ -223,7 +223,7 @@ const AffirmationsPage = () => {
         </motion.div>
 
         {/* Affirmation cards */}
-        <div className="space-y-3 mb-8">
+        <div className="h-[400px] overflow-y-auto pr-1 space-y-3 mb-8">
           <AnimatePresence initial={false}>
             {allItems.map(({ text, isCustom }) => {
               const isSelected = selected.has(text);

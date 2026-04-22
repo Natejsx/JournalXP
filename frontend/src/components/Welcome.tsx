@@ -74,29 +74,29 @@ export const QuoteBanner = () => {
   }, [pool]);
 
   return (
-    <motion.div className="pr-4 group/quotebanner relative">
+    <div className="mb-6">
       <AnimatePresence mode="wait">
-        <motion.div
+        <motion.p
           key={index}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.6 }}
-          className="text-white/90 text-base sm:text-lg mb-6"
+          className="text-white/90 text-base sm:text-lg"
         >
-          <p>{pool[index]}</p>
-        </motion.div>
+          {pool[index]}
+        </motion.p>
       </AnimatePresence>
       {userData && (
         <Link
           to="/affirmations"
-          className="absolute top-0 right-0 opacity-0 group-hover/quotebanner:opacity-100 transition-opacity p-1.5 rounded-lg bg-white/20 hover:bg-white/30"
-          title="Customize affirmations"
+          className="inline-flex items-center gap-1.5 mt-2 text-white/60 hover:text-white/90 transition-colors text-xs"
         >
-          <Pencil className="h-3.5 w-3.5 text-white" />
+          <Pencil className="h-3 w-3" />
+          Customize affirmations
         </Link>
       )}
-    </motion.div>
+    </div>
   );
 };
 
