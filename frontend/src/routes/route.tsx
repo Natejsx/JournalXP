@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { NotYet } from "@/components/NotYet";
 import { Loading } from "@/components/Loading";
+import { CommandPalette } from "@/components/CommandPalette";
 
 // Lazy loading all routes
 const LandingPage = lazy(() => import("@/pages/LandingPage"));
@@ -48,7 +49,9 @@ const AffirmationsPage = lazy(() => import("@/pages/AffirmationsPage"));
 
 const JournalRoutes = () => {
   return (
-    <Suspense fallback={<Loading />}>
+    <>
+      <CommandPalette />
+      <Suspense fallback={<Loading />}>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
