@@ -7,6 +7,7 @@ const updates = [
     date: "June 22nd, 2026",
     content: [
       "New Command Palette - press Ctrl+K (or click the search bar in the nav) to instantly jump to any page from anywhere in the app.",
+      "Removed the Most Used Words section from the Insights page.",
     ],
   },
 ];
