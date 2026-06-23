@@ -5,6 +5,7 @@ import {
   Sparkles,
   Menu,
   X,
+  Search,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
@@ -37,6 +38,13 @@ export const Nav = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const openPalette = () => {
+    if (isMenuOpen) setIsMenuOpen(false);
+    document.dispatchEvent(
+      new KeyboardEvent("keydown", { key: "k", ctrlKey: true, bubbles: true })
+    );
   };
 
   return (
