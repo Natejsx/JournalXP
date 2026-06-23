@@ -92,6 +92,7 @@ const JournalRoutes = () => {
         <Route path="/affirmations" element={<AffirmationsPage />} />
       </Routes>
     </Suspense>
+    </>
   );
 };
 
