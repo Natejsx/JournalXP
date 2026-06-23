@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
-import { X, Info, ChevronDown, ChevronUp } from "lucide-react";
+import { Info, ChevronDown, ChevronUp } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 
 const updates = [
   {
-    date: "April 21st, 2026",
+    date: "June 22nd, 2026",
     content: [
-      "New Affirmations page, choose 3 to 8 affirmations to rotate on your welcome banner, pick from the defaults or write your own.",
-      "Affirmation preferences are saved to your profile and accessible from the Customize tab in your profile settings.",
-      "Welcome banner now rotates your custom affirmations instead of the defaults when a personal set is saved.",
+      "New Command Palette - press Ctrl+K (or click the search bar in the nav) to instantly jump to any page from anywhere in the app.",
     ],
   },
 ];
@@ -16,13 +14,12 @@ const updates = [
 const STORAGE_KEY = "journalxp_updates_banner_minimized";
 
 export const UpdatesBanner = () => {
+  const { theme } = useTheme();
   const [isMinimized, setIsMinimized] = useState(() => {
-    // Load minimized state from localStorage on mount
     const saved = localStorage.getItem(STORAGE_KEY);
     return saved === "true";
   });
 
-  // Persist minimized state to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, String(isMinimized));
   }, [isMinimized]);
@@ -33,8 +30,6 @@ export const UpdatesBanner = () => {
 
   // Minimized view - compact bar at the top
   if (isMinimized) {
-    const { theme } = useTheme();
-
     return (
       <div
         className="bg-gradient-to-r text-white rounded-lg shadow-md p-3 max-w-4xl mx-auto my-4 cursor-pointer hover:shadow-lg transition-all"
@@ -51,7 +46,7 @@ export const UpdatesBanner = () => {
             </div>
             <div className="text-left">
               <h3 className="font-semibold text-sm">
-                What's New in JournalXP v3.1.4 ✨
+                What's New in JournalXP v3.2.0 ✨
               </h3>
               <p className="text-xs text-indigo-100">
                 Click to see all updates and new features
@@ -78,7 +73,7 @@ export const UpdatesBanner = () => {
       <div className="flex items-center gap-2 mb-2">
         <Info className="text-indigo-500 w-4 h-4" />
         <h2 className="text-indigo-700 font-semibold text-sm">
-          Latest Update | Version 3.1.4
+          Latest Update | Version 3.2.0
         </h2>
       </div>
 
