@@ -8,6 +8,7 @@ import {
   PawPrint,
   Trophy,
   Store,
+  Search,
 } from "lucide-react";
 import { User } from "firebase/auth";
 import { UserAvatarLoggedIn } from "@/components/Nav";
@@ -23,6 +24,12 @@ import {
 export interface NavDesktopProps {
   user: User;
 }
+
+const openPalette = () => {
+  document.dispatchEvent(
+    new KeyboardEvent("keydown", { key: "k", ctrlKey: true, bubbles: true })
+  );
+};
 
 export const NavDesktop: FC<NavDesktopProps> = ({ user }) => {
   const { theme } = useTheme();
@@ -149,6 +156,19 @@ export const NavDesktop: FC<NavDesktopProps> = ({ user }) => {
             <p>About</p>
           </TooltipContent>
         </Tooltip>
+
+        {/* Search trigger */}
+        <button
+          onClick={openPalette}
+          aria-label="Search pages"
+          className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-400 bg-gray-100 hover:bg-gray-200 rounded-lg border border-gray-200 transition-colors w-48"
+        >
+          <Search className="h-4 w-4 shrink-0" />
+          <span className="flex-1 text-left">Go to page...</span>
+          <kbd className="text-xs bg-white border border-gray-200 rounded px-1.5 py-0.5 font-sans">
+            Ctrl K
+          </kbd>
+        </button>
 
         {user ? (
           <UserAvatarLoggedIn />

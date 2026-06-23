@@ -68,23 +68,32 @@ export const Nav = () => {
           </div>
         </Link>
 
-        {/* Mobile menu button */}
+        {/* Mobile: search icon + hamburger */}
         {isMobile && (
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleMenu}
-            aria-label="Toggle menu"
-            className="md:hidden z-50 relative hover:bg-indigo-50"
-          >
-            {isMenuOpen ? (
-              <X className="h-6 w-6" 
-              style={{ color: theme.colors.primary }}/>
-            ) : (
-              <Menu className="h-6 w-6"
-              style={{ color: theme.colors.primary }} />
-            )}
-          </Button>
+          <div className="flex items-center gap-1">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={openPalette}
+              aria-label="Search pages"
+              className="hover:bg-indigo-50"
+            >
+              <Search className="h-5 w-5" style={{ color: theme.colors.primary }} />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleMenu}
+              aria-label="Toggle menu"
+              className="z-50 relative hover:bg-indigo-50"
+            >
+              {isMenuOpen ? (
+                <X className="h-6 w-6" style={{ color: theme.colors.primary }} />
+              ) : (
+                <Menu className="h-6 w-6" style={{ color: theme.colors.primary }} />
+              )}
+            </Button>
+          </div>
         )}
 
         {/* Desktop Nav Links */}
