@@ -30,7 +30,6 @@ export interface UserClient {
     totalJournalEntries: number;
     totalWordCount: number;
     averageEntryLength: number;
-    mostUsedWords: string[];
     totalXPfromJournals: number;
     totalWordsWritten?: number;
     longestEntry?: number;

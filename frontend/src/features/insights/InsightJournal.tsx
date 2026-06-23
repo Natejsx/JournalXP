@@ -947,44 +947,6 @@ export const InsightJournal = () => {
         </Card>
       </div>
 
-      {/* Word Cloud Placeholder */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <MessageSquare className="h-5 w-5" />
-            Most Used Words
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {userData.journalStats?.mostUsedWords &&
-          userData.journalStats.mostUsedWords.length > 0 ? (
-            <div className="flex flex-wrap gap-2 justify-center py-6">
-              {userData.journalStats.mostUsedWords
-                .slice(0, 20)
-                .map((word, index) => {
-                  const size = Math.max(12, 24 - index * 0.5);
-                  const opacity = Math.max(0.4, 1 - index * 0.03);
-                  return (
-                    <span
-                      key={index}
-                      className="font-medium text-indigo-600 hover:text-indigo-800 transition-colors cursor-default"
-                      style={{
-                        fontSize: `${size}px`,
-                        opacity: opacity,
-                      }}
-                    >
-                      {word}
-                    </span>
-                  );
-                })}
-            </div>
-          ) : (
-            <p className="text-center text-gray-500 py-8">
-              Write more entries to see your most used words!
-            </p>
-          )}
-        </CardContent>
-      </Card>
 
       {/* Community Benchmarks */}
       {/* TODO: implement this soon */}
