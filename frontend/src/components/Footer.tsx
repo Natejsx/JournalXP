@@ -32,8 +32,8 @@ export const Footer = () => {
   const [email, setEmail] = useState("");
   const [newsletterStatus, setNewsletterStatus] = useState<"idle" | "success">("idle");
   const currentYear = new Date().getFullYear();
-  const appVersion = "v3.1.4";
-  const lastUpdated = "April 14th, 2026";
+  const appVersion = "v3.2.0";
+  const lastUpdated = "June 22nd, 2026";
 
   // Show back to top button when scrolled down
   useEffect(() => {
