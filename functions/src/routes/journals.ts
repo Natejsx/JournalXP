@@ -58,395 +58,6 @@ function getWordCount(content: string): number {
     .filter((word) => word.length > 0).length;
 }
 
-/**
- * Common stop words to filter out from word frequency tracking
- */
-const STOP_WORDS = new Set([
-  // Articles
-  "a",
-  "an",
-  "the",
-  // Pronouns
-  "i",
-  "me",
-  "my",
-  "myself",
-  "we",
-  "our",
-  "ours",
-  "ourselves",
-  "you",
-  "your",
-  "yours",
-  "yourself",
-  "yourselves",
-  "he",
-  "him",
-  "his",
-  "himself",
-  "she",
-  "her",
-  "hers",
-  "herself",
-  "it",
-  "its",
-  "itself",
-  "they",
-  "them",
-  "their",
-  "theirs",
-  "themselves",
-  "what",
-  "which",
-  "who",
-  "whom",
-  "this",
-  "that",
-  "these",
-  "those",
-  // Verbs (common)
-  "am",
-  "is",
-  "are",
-  "was",
-  "were",
-  "be",
-  "been",
-  "being",
-  "have",
-  "has",
-  "had",
-  "having",
-  "do",
-  "does",
-  "did",
-  "doing",
-  "would",
-  "should",
-  "could",
-  "ought",
-  "will",
-  "shall",
-  "can",
-  "may",
-  "might",
-  "must",
-  // Prepositions
-  "at",
-  "by",
-  "for",
-  "from",
-  "in",
-  "into",
-  "of",
-  "on",
-  "to",
-  "with",
-  "about",
-  "against",
-  "between",
-  "through",
-  "during",
-  "before",
-  "after",
-  "above",
-  "below",
-  "up",
-  "down",
-  "out",
-  "off",
-  "over",
-  "under",
-  "again",
-  // Conjunctions
-  "and",
-  "but",
-  "or",
-  "nor",
-  "so",
-  "yet",
-  "both",
-  "either",
-  "neither",
-  "not",
-  "only",
-  "than",
-  "when",
-  "while",
-  "if",
-  "because",
-  "as",
-  "until",
-  // Other common words
-  "just",
-  "also",
-  "very",
-  "really",
-  "even",
-  "still",
-  "already",
-  "always",
-  "never",
-  "ever",
-  "now",
-  "then",
-  "here",
-  "there",
-  "where",
-  "how",
-  "all",
-  "each",
-  "every",
-  "any",
-  "some",
-  "no",
-  "most",
-  "other",
-  "such",
-  "own",
-  "same",
-  "too",
-  "more",
-  "less",
-  "much",
-  "many",
-  "few",
-  "little",
-  "lot",
-  "like",
-  "get",
-  "got",
-  "getting",
-  "make",
-  "made",
-  "making",
-  "go",
-  "going",
-  "went",
-  "gone",
-  "come",
-  "came",
-  "coming",
-  "take",
-  "took",
-  "taking",
-  "see",
-  "saw",
-  "seeing",
-  "know",
-  "knew",
-  "knowing",
-  "think",
-  "thought",
-  "thinking",
-  "want",
-  "wanted",
-  "wanting",
-  "feel",
-  "felt",
-  "feeling",
-  "say",
-  "said",
-  "saying",
-  "tell",
-  "told",
-  "telling",
-  "ask",
-  "asked",
-  "asking",
-  "use",
-  "used",
-  "using",
-  "find",
-  "found",
-  "finding",
-  "give",
-  "gave",
-  "giving",
-  "try",
-  "tried",
-  "trying",
-  "call",
-  "called",
-  "calling",
-  "keep",
-  "kept",
-  "keeping",
-  "let",
-  "become",
-  "became",
-  "becoming",
-  "seem",
-  "seemed",
-  "seeming",
-  "leave",
-  "left",
-  "leaving",
-  "put",
-  "show",
-  "showed",
-  "showing",
-  "begin",
-  "began",
-  "beginning",
-  "start",
-  "started",
-  "starting",
-  // Time words
-  "today",
-  "yesterday",
-  "tomorrow",
-  "day",
-  "week",
-  "month",
-  "year",
-  "time",
-  "morning",
-  "afternoon",
-  "evening",
-  "night",
-  // Misc
-  "thing",
-  "things",
-  "something",
-  "anything",
-  "nothing",
-  "everything",
-  "someone",
-  "anyone",
-  "everyone",
-  "nobody",
-  "people",
-  "person",
-  "way",
-  "well",
-  "back",
-  "first",
-  "last",
-  "long",
-  "new",
-  "old",
-  "good",
-  "bad",
-  "right",
-  "wrong",
-  "best",
-  "worst",
-  "better",
-  "worse",
-  "big",
-  "small",
-  "able",
-  "dont",
-  "didnt",
-  "wont",
-  "cant",
-  "im",
-  "ive",
-  "youre",
-  "youve",
-  "hes",
-  "shes",
-  "its",
-  "were",
-  "theyre",
-  "theyve",
-  "isnt",
-  "arent",
-  "wasnt",
-  "werent",
-  "hasnt",
-  "havent",
-  "hadnt",
-  "doesnt",
-  "didnt",
-  "wont",
-  "wouldnt",
-  "shouldnt",
-  "couldnt",
-  "mustnt",
-  "lets",
-  "thats",
-  "whos",
-  "whats",
-  "heres",
-  "theres",
-  "wheres",
-  "whens",
-  "whys",
-  "hows",
-  "alls",
-  "eachs",
-]);
-
-/**
- * Extract meaningful words from content (filters stop words, short words, numbers)
- * Returns a map of word -> count
- */
-function extractMeaningfulWords(content: string): Record<string, number> {
-  if (!content || typeof content !== "string") return {};
-
-  const wordCounts: Record<string, number> = {};
-
-  // Normalize: lowercase, remove punctuation except apostrophes within words
-  const words = content
-    .toLowerCase()
-    .replace(/[^\w\s']/g, " ") // Replace punctuation with spaces
-    .split(/\s+/)
-    .filter((word) => {
-      // Remove leading/trailing apostrophes
-      word = word.replace(/^'+|'+$/g, "");
-      return (
-        word.length >= 3 && // At least 3 characters
-        !STOP_WORDS.has(word) && // Not a stop word
-        !/^\d+$/.test(word) // Not a number
-      );
-    });
-
-  for (const word of words) {
-    const cleanWord = word.replace(/^'+/, "").replace(/'+$/, "");
-    if (cleanWord.length >= 3) {
-      wordCounts[cleanWord] = (wordCounts[cleanWord] || 0) + 1;
-    }
-  }
-
-  return wordCounts;
-}
-
-/**
- * Calculate the top N most used words from a frequency map
- */
-function getTopWords(
-  wordFrequency: Record<string, number>,
-  limit: number = 10,
-): string[] {
-  return Object.entries(wordFrequency)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, limit)
-    .map(([word]) => word);
-}
-
-/**
- * Merge word counts into existing frequency map
- */
-function mergeWordCounts(
-  existing: Record<string, number>,
-  newCounts: Record<string, number>,
-  operation: "add" | "subtract" = "add",
-): Record<string, number> {
-  const result = { ...existing };
-  const multiplier = operation === "add" ? 1 : -1;
-
-  for (const [word, count] of Object.entries(newCounts)) {
-    result[word] = (result[word] || 0) + count * multiplier;
-    // Remove words with zero or negative count
-    if (result[word] <= 0) {
-      delete result[word];
-    }
-  }
-
-  return result;
-}
 
 /**
  * Map journal entry type to typeBreakdown key
@@ -593,19 +204,12 @@ router.post(
         const currentTotalWordCount = currentJournalStats.totalWordCount || 0;
         const currentTotalEntries =
           currentJournalStats.totalJournalEntries || 0;
-        const currentWordFrequency = currentJournalStats.wordFrequency || {};
-
         // Calculate new totals
         const newTotalWordCount = currentTotalWordCount + wordCount;
         const newTotalEntries = currentTotalEntries + 1;
         const newAverageEntryLength = Math.round(
           newTotalWordCount / newTotalEntries,
         );
-
-        // Extract and merge word frequencies
-        const entryWordCounts = extractMeaningfulWords(content);
-        const newWordFrequency = mergeWordCounts(currentWordFrequency, entryWordCounts, "add");
-        const newMostUsedWords = getTopWords(newWordFrequency, 10);
 
         // Update type breakdown (current entries count)
         const currentTypeBreakdown = currentJournalStats.typeBreakdown || {
@@ -701,8 +305,6 @@ router.post(
               totalWordsWritten: FieldValue.increment(wordCount),
               totalXPfromJournals: FieldValue.increment(spendableXPAmount),
               averageEntryLength: newAverageEntryLength,
-              wordFrequency: newWordFrequency,
-              mostUsedWords: newMostUsedWords,
               typeBreakdown: newTypeBreakdown,
               lifetimeTypeBreakdown: newLifetimeTypeBreakdown,
               longestEntry: newLongestEntry,
@@ -859,8 +461,6 @@ router.delete(
         const currentTotalWordCount = currentJournalStats.totalWordCount || 0;
         const currentTotalEntries =
           currentJournalStats.totalJournalEntries || 0;
-        const currentWordFrequency = currentJournalStats.wordFrequency || {};
-
         // Calculate new totals after deletion
         const newTotalWordCount = Math.max(
           0,
@@ -871,11 +471,6 @@ router.delete(
           newTotalEntries > 0
             ? Math.round(newTotalWordCount / newTotalEntries)
             : 0;
-
-        // Update word frequencies by subtracting deleted entry's words
-        const entryWordCounts = extractMeaningfulWords(entryContent);
-        const newWordFrequency = mergeWordCounts(currentWordFrequency, entryWordCounts, "subtract");
-        const newMostUsedWords = getTopWords(newWordFrequency, 10);
 
         // Update type breakdown by decrementing the deleted entry's type
         const currentTypeBreakdown = currentJournalStats.typeBreakdown || {
@@ -921,8 +516,6 @@ router.delete(
               journalCount: FieldValue.increment(-1),
               totalWordCount: FieldValue.increment(-wordCount),
               averageEntryLength: newAverageEntryLength,
-              wordFrequency: newWordFrequency,
-              mostUsedWords: newMostUsedWords,
               typeBreakdown: newTypeBreakdown,
               longestEntry: newLongestEntry,
             },
@@ -1000,9 +593,7 @@ router.delete(
             totalJournalEntries: 0,
             totalWordCount: 0,
             averageEntryLength: 0,
-            mostUsedWords: [],
             totalXPfromJournals: 0,
-            wordFrequency: {},
             typeBreakdown: {
               freeWriting: 0,
               guided: 0,
