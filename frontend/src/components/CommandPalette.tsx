@@ -31,9 +31,12 @@ import {
   Bell,
   FileText,
   Target,
+  Home,
+  Icon
 } from "lucide-react";
 
 const PAGES = [
+  { name: "Home", path: "/", Icon: Home},
   { name: "Journal", path: "/journal", Icon: Book },
   { name: "Vault", path: "/vault", Icon: Lock },
   { name: "Reflection Archive", path: "/reflection-archive", Icon: Archive },
